@@ -1,15 +1,14 @@
+import json
 import os
+import sys
 from dataclasses import dataclass
 
-import sys
-import json
+import numpy as np
 from bitarray import bitarray
 from matplotlib import pyplot as plt
 
 from buffer import FrameBuffer
 from functions import *
-import numpy as np
-
 
 QT = np.array(
     [

@@ -3,10 +3,10 @@
 import sys
 import time
 from math import ceil
+
 import matplotlib.pyplot as plt
 
 from functions import *
-
 
 CHANNEL_SPLITTER = b"@channel_splitter@"
 

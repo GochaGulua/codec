@@ -1,18 +1,17 @@
+import csv
 import time
 from array import array
 from math import ceil
 from random import random
 
 import cv2
+import numpy as np
 from matplotlib import pyplot as plt
 from numpy import ones
-from functions import *
 
 from buffer import FrameBufferV1
 from encoder import Encoder
-import numpy as np
-import csv
-
+from functions import *
 
 QTY = np.array(
     [

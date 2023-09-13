@@ -1,11 +1,10 @@
 import warnings
-from cmath import log10, sqrt, inf
+from cmath import inf, log10, sqrt
 from collections import Counter
 
 import cv2
 import numpy as np
 from bitarray import bitarray
-
 
 MAX_VAL_SQ = 255.0**2
 DEPTH = 8
