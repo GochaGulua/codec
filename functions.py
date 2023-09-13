@@ -10,6 +10,7 @@ from bitarray import bitarray
 MAX_VAL_SQ = 255.0**2
 DEPTH = 8
 MAX_MSE_FOR_PREDICTION = 50
+# FINAL_MAX_MSE_FOR_PREDICTION = 50000
 BLOCK_SIZE = 8
 FUTURE_REFERENCE_SIGN = "f"
 
@@ -388,7 +389,6 @@ def find_match(target_block, reference_frame, block_num, block_size=BLOCK_SIZE):
                 idx = [i, j]
 
     if min_mse > MAX_MSE_FOR_PREDICTION:
-        # TODO ??
         return None
 
     cur_block_size = block_size // 2
@@ -413,7 +413,6 @@ def find_match(target_block, reference_frame, block_num, block_size=BLOCK_SIZE):
                 idx = [i, j]
 
     if min_mse > MAX_MSE_FOR_PREDICTION:
-        # TODO ??
         return None
 
     cur_block_size = block_size
@@ -470,3 +469,17 @@ def motion_compensation(
             block_num += 1
 
     return motion_vectors
+
+
+def print_intra(intra_encoded_blocks: bitarray, row_len: int) -> None:
+    s = ""
+    for i, c in enumerate(intra_encoded_blocks.__str__()[10:-2]):
+        if i % row_len == 0:
+            s += "\n"
+
+        if c == "1":
+            s += "\u2588\u2588"
+        else:
+            s += "  "
+
+    print(s)

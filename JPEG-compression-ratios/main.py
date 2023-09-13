@@ -41,7 +41,7 @@ windowSize = len(QTY)
 
 t0 = time.time()
 # read image
-imgOriginal = cv2.imread("img.tif", cv2.IMREAD_COLOR)
+imgOriginal = cv2.imread("marbles.bmp", cv2.IMREAD_COLOR)
 
 # convert BGR to YCrCb
 img = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2YCR_CB)

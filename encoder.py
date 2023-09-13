@@ -33,7 +33,6 @@ class Encoder:
     B_frame_buffer: FrameBuffer
 
     def encode(self, path) -> bitarray:
-        # out: bitarray = bitarray([])
         out = 0
         input_len: int = 0
 
@@ -64,15 +63,19 @@ class Encoder:
                 ) = self.encode_frame(frame, frame_count_mod)
                 self.reference_frame_buffer.enqueue(decoded_frame)
 
+                if frame_count_mod in [3, 6]:
+                    row_len = frame.shape[0] // 8
+                    print_intra(intra_encoded_blocks, row_len)
+
                 frame_size = 0
                 frame_size += len(rle)
                 frame_size += sys.getsizeof(huffman) * 8
                 if intra_encoded_blocks is not None:
                     frame_size += len(intra_encoded_blocks)
                     frame_size += len(motion_vectors_diff) * 8 * 2
-                    print(
-                        f"frame size {len(rle), sys.getsizeof(huffman) * 8, len(intra_encoded_blocks),len(motion_vectors_diff) * 8 * 2 + 3, frame_size}"
-                    )
+                    # print(
+                    #     f"frame size {len(rle), sys.getsizeof(huffman) * 8, len(intra_encoded_blocks),len(motion_vectors_diff) * 8 * 2 + 3, frame_size}"
+                    # )
                 out += frame_size
                 print(f"frame size {frame_size}")
 
@@ -80,8 +83,6 @@ class Encoder:
                 plt.show()
 
                 # TODO add current frame to output stream
-                # out.extend(frame_bits)
-                # out.extend(huffman_bits)
                 if not self.B_frame_buffer.empty():
                     (
                         rle,
@@ -99,7 +100,13 @@ class Encoder:
                     frame_size += len(intra_encoded_blocks)
                     frame_size += len(motion_vectors_diff) * 8 * 2
                     out += frame_size
-                    print(f"frame size {frame_size}")
+                    # print(f"frame size {frame_size}")
+                    print(
+                        f"frame size {len(rle),sys.getsizeof(huffman) * 8, len(intra_encoded_blocks),len(motion_vectors_diff) * 8 * 2 + 3, frame_size}"
+                    )
+
+                    row_len = frame.shape[0] // 8
+                    print_intra(intra_encoded_blocks, row_len)
 
                     plt.imshow(decoded_frame, cmap="gray")
                     plt.show()
@@ -124,6 +131,8 @@ class Encoder:
                     print(
                         f"frame size {len(rle),sys.getsizeof(huffman) * 8, len(intra_encoded_blocks),len(motion_vectors_diff) * 8 * 2 + 3, frame_size}"
                     )
+
+                    print_intra(intra_encoded_blocks, row_len)
 
                     plt.imshow(decoded_frame, cmap="gray")
                     plt.show()
