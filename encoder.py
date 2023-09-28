@@ -1,10 +1,8 @@
-import json
 import os
 import sys
 from dataclasses import dataclass
 
-import numpy as np
-from bitarray import bitarray
+from natsort import natsorted
 from matplotlib import pyplot as plt
 
 from buffer import FrameBuffer
@@ -35,7 +33,9 @@ class Encoder:
         out = 0
         input_len: int = 0
 
-        for frame_count, frame_filename in enumerate(sorted(os.listdir(path))):
+        for frame_count, frame_filename in enumerate(
+            natsorted(os.listdir(path), key=lambda y: y.lower())
+        ):
             try:
                 frame_filename_noext = frame_filename.split(".")[0]
                 print(f"processing {frame_filename}")
@@ -47,6 +47,8 @@ class Encoder:
             frame_count_mod = frame_count % 9
 
             frame = cv2.imread(path + frame_filename, cv2.IMREAD_GRAYSCALE)
+            assert frame is not None
+
             # normalise values around 0
             frame = np.float32(frame) - 128
 
